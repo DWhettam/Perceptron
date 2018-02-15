@@ -29,5 +29,5 @@ while True:
     if np.array_equal(previous_error, error):
         break
 
-print(weights)
+print("predictions: ", prediction)
 
