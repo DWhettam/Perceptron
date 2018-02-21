@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-
+import matplotlib.pyplot as plt
 
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
@@ -22,24 +22,27 @@ def transform_data(x):
 
 x = load_data('Initial_data.csv')
 x = transform_data(x)
-learning_rate = 0.000002
+learning_rate = 0.1
 n = x.shape[0]
 weights = np.random.uniform(-0.5, 0.5, n)
-error = []
-prediction = []
 sigmoid_input = 0
+epochs = 1
+predictions = []
+iterations = []
 
-for data in x.T:
-    for i, value in enumerate(data):
-        sigmoid_input += (value * weights[i])
-    prediction(sigmoid_input)
-    
-# for i in range(10):
-#     previous_error = error
-#     prediction = sigmoid(np.dot(x_test, weights))
-#     print(prediction)
-#     error = y_test - prediction
-#     delta = (np.dot(x_test.T, error) * learning_rate)
-#     weights += delta
+for epoch in range(epochs):
+    for idx, data in enumerate(x.T):
+        if idx == x.shape[1] -1:
+            break
+        for i, value in enumerate(data):
+            sigmoid_input += (value * weights[i])
+        prediction = sigmoid(sigmoid_input)
+        error = x.T[idx + 1, 2] - prediction
+        delta = learning_rate * data * error
+        weights += delta
 
-print("predictions: ", prediction)
+        predictions.append(prediction)
+        iterations.append(idx)
+
+plt.plot(iterations, predictions)
+plt.show()
