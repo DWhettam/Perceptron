@@ -5,7 +5,7 @@ A simple perceptron in Python used to predict a robot's movements.
 **Optimisation:** Gradient Descent  
 
 ### Data
-Time-series data of a robot's position is provided. This is split into 3 columns as shown below.  
+Time-series data of a robot's position is provided. This is split into N columns as shown below (example N = 3).  
 The target labels are given by the robot's next position in the data-set.
 
 |  col1   |  col2   |  col3  |
