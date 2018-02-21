@@ -1,8 +1,12 @@
 # Perceptron
 A simple perceptron in Python used to predict a robot's movements.
 
+**Activation function:** Sigmoid
+**Optimisation:** Gradient Descent
+
 ### Data
-Time-series data of a robot's position is provided. This is split into 3 columns like so:
+Time-series data of a robot's position is provided. This is split into 3 columns as shown below.
+The target labels are given by the robot's next position in the data-set.
 
 |  col1   |  col2   |  col3  |
 | ------- | ------- | ------ |
