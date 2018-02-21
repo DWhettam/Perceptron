@@ -12,11 +12,13 @@ def load_data(filename):
         return data
 
 def transform_data(x):
-    num_columns = 3
+    num_columns = 5
     data_matrix = np.zeros((num_columns, x.shape[0]), dtype = float)
     data_matrix[0,num_columns-1:] = x[:-(num_columns-1) or None]
     data_matrix[1,num_columns-2:] = x[:-(num_columns-2) or None]
     data_matrix[2,num_columns-3:] = x[:-(num_columns-3) or None]
+    data_matrix[3,num_columns-4:] = x[:-(num_columns-4) or None]
+    data_matrix[4,num_columns-5:] = x[:-(num_columns-5) or None]
     return data_matrix
 
 
@@ -24,27 +26,25 @@ x = load_data('data.csv')
 x = transform_data(x)
 learning_rate = 0.1
 n = x.shape[0]
-weights = np.random.uniform(-0.5, 0.5, n)
-sigmoid_input = 0
-epochs = 1
+weights = np.random.normal(0, 1, n)
+epochs = 3
 predictions = []
 
 
 for epoch in range(epochs):
     MSE = 0
     for idx, data in enumerate(x.T):
+        sigmoid_input = 0
         if idx == x.shape[1] -1:
             break
         for i, value in enumerate(data):
             sigmoid_input += (value * weights[i])
         prediction = sigmoid(sigmoid_input)
-        error = x.T[idx + 1, 2] - prediction
-        MSE += np.square(error)
-        delta = learning_rate * data * error
-        weights += delta
         predictions.append(prediction)
-    MSE = MSE/n
-    print("MSE:", MSE)
+        error = x.T[idx + 1, 2] - prediction
+        for idx, inpt in enumerate(data):
+            delta = learning_rate * inpt * error
+            weights[idx] += delta
 
 
 plt.plot(predictions)
