@@ -20,7 +20,7 @@ def transform_data(x):
     return data_matrix
 
 
-x = load_data('Initial_data.csv')
+x = load_data('data.csv')
 x = transform_data(x)
 learning_rate = 0.1
 n = x.shape[0]
@@ -28,9 +28,10 @@ weights = np.random.uniform(-0.5, 0.5, n)
 sigmoid_input = 0
 epochs = 1
 predictions = []
-iterations = []
+
 
 for epoch in range(epochs):
+    MSE = 0
     for idx, data in enumerate(x.T):
         if idx == x.shape[1] -1:
             break
@@ -38,11 +39,14 @@ for epoch in range(epochs):
             sigmoid_input += (value * weights[i])
         prediction = sigmoid(sigmoid_input)
         error = x.T[idx + 1, 2] - prediction
+        MSE += np.square(error)
         delta = learning_rate * data * error
         weights += delta
-
         predictions.append(prediction)
-        iterations.append(idx)
+    MSE = MSE/n
+    print("MSE:", MSE)
 
-plt.plot(iterations, predictions)
+
+plt.plot(predictions)
+plt.ylim([0,1])
 plt.show()
