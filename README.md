@@ -23,6 +23,6 @@ The target labels are given by the robot's next position in the data-set.
 
 
 ### Requirements
-[Numpy](https://github.com/numpy/numpy)  
-[Pandas](https://github.com/pandas-dev/pandas)  
-[Matplotlib](https://github.com/matplotlib/matplotlib)  
+-[Numpy](https://github.com/numpy/numpy)  
+-[Pandas](https://github.com/pandas-dev/pandas)  
+-[Matplotlib](https://github.com/matplotlib/matplotlib)  
