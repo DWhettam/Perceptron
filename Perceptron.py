@@ -2,51 +2,27 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
+def load_data(filename, num_columns):
+        df = (pd.read_csv(filename)).iloc[:, -1]
+        data_matrix = np.zeros((num_columns, df.shape[0]), dtype = float)
+        for i in range(num_columns):
+            data_matrix[i, num_columns-(i+1):] = df[:-(num_columns-(i+1)) or None]
+        return data_matrix
+
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
 
-
-def load_data(filename):
-        df = pd.read_csv(filename)
-        data = df.iloc[:, -1]
-        return data
-
-def transform_data(x):
-    num_columns = 5
-    data_matrix = np.zeros((num_columns, x.shape[0]), dtype = float)
-    data_matrix[0,num_columns-1:] = x[:-(num_columns-1) or None]
-    data_matrix[1,num_columns-2:] = x[:-(num_columns-2) or None]
-    data_matrix[2,num_columns-3:] = x[:-(num_columns-3) or None]
-    data_matrix[3,num_columns-4:] = x[:-(num_columns-4) or None]
-    data_matrix[4,num_columns-5:] = x[:-(num_columns-5) or None]
-    return data_matrix
-
-
-x = load_data('data.csv')
-x = transform_data(x)
+x = load_data('data.csv', 5)
 learning_rate = 0.1
-n = x.shape[0]
-weights = np.random.normal(0, 1, n)
-epochs = 3
+weights = np.random.normal(0, 1, x.shape[0])
+epochs = 1
 predictions = []
 
-
 for epoch in range(epochs):
-    MSE = 0
-    for idx, data in enumerate(x.T):
-        sigmoid_input = 0
-        if idx == x.shape[1] -1:
-            break
-        for i, value in enumerate(data):
-            sigmoid_input += (value * weights[i])
-        prediction = sigmoid(sigmoid_input)
-        predictions.append(prediction)
-        error = x.T[idx + 1, 2] - prediction
-        for idx, inpt in enumerate(data):
-            delta = learning_rate * inpt * error
-            weights[idx] += delta
+    for idx, data in enumerate(x.T[1:]):
+        predictions.append(sigmoid(np.dot(x.T, weights)))
+        error = x.T[idx + 1, 2] - predictions[-1][idx]
+        weights += (learning_rate * data * error)
 
-
-plt.plot(predictions)
-plt.ylim([0,1])
+plt.plot(sigmoid(np.dot(x.T, weights)))
 plt.show()
