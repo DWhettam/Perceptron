@@ -1,7 +1,6 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import matplotlib.gridspec as gridspec
 
 def load_data(filename, num_columns):
         df = (pd.read_csv(filename)).iloc[:, -1]
