@@ -2,7 +2,7 @@
 A simple perceptron in Python used to predict a robot's movements.  
 
 **Activation function:** Sigmoid  
-**Optimisation:** Gradient Descent  
+**Optimisation:** Stochastic Gradient Descent  
 
 ### Data
 Time-series data of a robot's position is provided. This is split into N columns as shown below (example N = 3).  
