@@ -24,7 +24,7 @@ x_train, x_test, x_complete = load_data('data.csv', 3)
 learning_rate = 0.1
 #initialise weights with random gaussian distribution
 weights = np.random.normal(0, 0.5, x_complete.shape[0])
-epochs = 5
+epochs = 1
 train_mse = []
 test_mse = []
 
@@ -45,16 +45,15 @@ for epoch in range(epochs):
         if idx < len(x_test.T) -1:
             test_predictions.append(sigmoid(np.dot(x_test.T, weights)))
             test_error_list.append(x_test.T[idx + 1, -1] - test_predictions[-1][idx])
-    #Calculating MSE per-epoch
-    train_mse.append((sum(np.square(train_error_list)))/len(train_error_list))
-    test_mse.append((sum(np.square(test_error_list)))/len(test_error_list))
+        #Calculating MSE
+        train_mse.append((sum(np.square(train_error_list)))/len(train_error_list))
+        test_mse.append((sum(np.square(test_error_list)))/len(test_error_list))
 
 #Printing error values to console
 train_MSE = train_mse[-1]
 test_MSE = test_mse[-1]
 print("training MSE: ", train_MSE)
 print("testing MSE: ", test_MSE)
-print(len(train_mse))
 #Plotting predictions, actual and error
 plt.figure(0)
 plt1 = plt.subplot2grid((3,3), (0,0), colspan=3)
@@ -72,9 +71,9 @@ plt2.set_ylabel("Robot Position")
 plt3 = plt.subplot2grid((3,3), (2,0), colspan=3)
 train, = plt3.plot(train_mse, label = 'Train')
 test, = plt3.plot(test_mse, label = 'Test')
-plt3.set_ylim(0, 0.002)
+plt3.set_ylim(0, 0.005)
 plt3.set_title("MSE Over Time")
-plt3.set_xlabel("Epochs")
+plt3.set_xlabel("Iterations")
 plt3.set_ylabel("Mean Squared Error")
 
 plt.legend([test, train], ['Test', 'Train'])
